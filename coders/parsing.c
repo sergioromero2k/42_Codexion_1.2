@@ -13,7 +13,7 @@
 #include "codexion.h"
 
 /**
- * Chec if a sring represents a validate positive number.
+ * Check if a string represents a validate positive number.
  * 
  * @param str Input string.
  * @return 1 if valid number, 0 otherwise.
