@@ -51,7 +51,7 @@ int	cooldown_active(t_dongle *dongle)
 /**
  * Thread-safe function to log that a coder has successfully acquired a dongle.
  * 
- * @param me Pinter to the coder structure performing the action.
+ * @param me Pointer to the coder structure performing the action.
  */
 void	print_lock(t_coder *me)
 {
