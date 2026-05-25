@@ -8,19 +8,19 @@
 NAME		= codexion
 
 CC			= cc
-CFLAGS 		= -Wall -Werror -Wextra -pthread
+CFLAGS		= -Wall -Werror -Wextra -pthread -I coders/
 RM			= rm -rf
 
-SRCS		= main.c \
-			parsing.c \
-			init.c \
-			utils.c \
-			heap.c \
-			heap_utils.c \
-			actions.c \
-			actions_utils.c \
-			routine.c \
-			monitor.c \
+SRCS		= coders/main.c \
+			coders/parsing.c \
+			coders/init.c \
+			coders/utils.c \
+			coders/actions.c \
+			coders/actions_utils.c \
+			coders/routine.c \
+			coders/monitor.c \
+			coders/heap.c \
+			coders/heap_utils.c
 
 OBJS		= $(SRCS:.c=.o)
 

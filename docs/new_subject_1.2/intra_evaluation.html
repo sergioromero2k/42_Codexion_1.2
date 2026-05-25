@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Codexion - Evaluation Sheet</title>
+    <style>
+        :root {
+            --bg-main: #0f111a;
+            --bg-card: #1e2235;
+            --text-main: #f0f2f6;
+            --text-muted: #a0aec0;
+            --accent-green: #00babc;
+            --accent-red: #ea4335;
+            --border-color: #2d3142;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 850px;
+            background: var(--bg-card);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 1px solid var(--border-color);
+        }
+
+        h1, h2, h3, h4 {
+            color: #fff;
+            margin-top: 0;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent-green);
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            font-size: 0.95rem;
+        }
+
+        .repo-box {
+            background: #131622;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .repo-url {
+            color: var(--accent-green);
+            overflow-x: auto;
+            white-space: nowrap;
+            width: 90%;
+        }
+
+        .btn-copy {
+            background: var(--border-color);
+            color: #fff;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: background 0.2s;
+        }
+
+        .btn-copy:hover {
+            background: #414765;
+        }
+
+        section {
+            margin-bottom: 35px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            border-left: 4px solid var(--accent-green);
+            padding-left: 12px;
+            margin-bottom: 15px;
+        }
+
+        p, li {
+            line-height: 1.6;
+            color: var(--text-main);
+            font-size: 0.95rem;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .question-block {
+            background: #171b2c;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .question-name {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .btn-radio {
+            flex: 1;
+            text-align: center;
+        }
+
+        .btn-radio input {
+            display: none;
+        }
+
+        .btn-radio label {
+            display: block;
+            padding: 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            border: 2px solid var(--border-color);
+            font-weight: bold;
+            transition: all 0.2s;
+            user-select: none;
+        }
+
+        .btn-radio-yes input:checked + label {
+            background: rgba(0, 186, 188, 0.15);
+            border-color: var(--accent-green);
+            color: var(--accent-green);
+        }
+
+        .btn-radio-no input:checked + label {
+            background: rgba(234, 67, 53, 0.15);
+            border-color: var(--accent-red);
+            color: var(--accent-red);
+        }
+
+        .btn-radio label:hover {
+            background: #252a41;
+        }
+
+        .flags-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .flag-item input {
+            display: none;
+        }
+
+        .flag-item label {
+            display: block;
+            padding: 12px;
+            text-align: center;
+            border-radius: 6px;
+            cursor: pointer;
+            background: #171b2c;
+            border: 1px solid var(--border-color);
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .flag-item input:checked + label.flag-ok {
+            background: var(--accent-green);
+            color: #000;
+            font-weight: bold;
+        }
+
+        .flag-item input:checked + label.flag-fail {
+            background: var(--accent-red);
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .flag-item label:hover {
+            background: #252a41;
+        }
+
+        .submit-box {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .btn-submit {
+            background: var(--accent-green);
+            color: #000;
+            font-weight: bold;
+            font-size: 1.1rem;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: transform 0.1s, background 0.2s;
+        }
+
+        .btn-submit:hover {
+            background: #009ca0;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Scale for Project: Codexion</h1>
+    <div class="subtitle">Evaluate 1 peer honestly, constructively, and rigorously.</div>
+
+    <div class="repo-box">
+        <div class="repo-url" id="repoText">git@vogsphere.42madrid.com:vogsphere/intra-uuid-xxxxxx-xxxx-xxxx</div>
+        <button class="btn-copy" onclick="copyRepo()">Copy</button>
+    </div>
+
+    <form id="evalForm">
+        
+        <section>
+            <div class="section-title">Introduction</div>
+            <p>- Remain polite, courteous, respectful and constructive throughout the evaluation process.</p>
+            <p>- Take the time to discuss and debate the problems you have identified with the evaluated student.</p>
+            <p>- Always keep an open mind and grade honestly. Peer-evaluation is only valid if conducted seriously.</p>
+        </section>
+
+        <section>
+            <div class="section-title">Guidelines</div>
+            <ul>
+                <li>Only grade the work that is present inside the official Git repository.</li>
+                <li>Ensure that "git clone" is performed in an empty folder.</li>
+                <li>Check carefully that no malicious aliases are used to fool you.</li>
+                <li><strong>No crashes:</strong> Any segmentation fault, premature, or uncontrolled termination during defense means 0.</li>
+                <li><strong>Memory leaks:</strong> Any memory allocated on the heap must be properly freed before completion. Use leaks, valgrind, etc.</li>
+            </ul>
+        </section>
+
+        <section>
+            <div class="section-title">Preliminaries</div>
+            
+            <div class="question-block">
+                <div class="question-name">Basics</div>
+                <p>Must compile with: <code>-Wall -Wextra -Werror -pthread</code> without warnings. Binary named <code>codexion</code>.</p>
+                <p>Arguments order: <em>number_of_coders, time_to_burnout, time_to_compile, time_to_debug, time_to_refactor, number_of_compiles_required, dongle_cooldown, scheduler.</em></p>
+                <div class="btn-group">
+                    <div class="btn-radio btn-radio-yes">
+                        <input type="radio" name="q_basics" id="q_basics_y" value="1">
+                        <label for="q_basics_y">Yes</label>
+                    </div>
+                    <div class="btn-radio btn-radio-no">
+                        <input type="radio" name="q_basics" id="q_basics_n" value="0" checked>
+                        <label for="q_basics_n">No</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-name">Global Variables State</div>
+                <p>Check if there is any global mutable variable used to manage shared resources (dongles), scheduling policy, or logging.</p>
+                <p><strong>If you find a global mutable state, the evaluation stops here (Grade 0).</strong></p>
+                <div class="btn-group">
+                    <div class="btn-radio btn-radio-yes">
+                        <input type="radio" name="q_global" id="q_global_y" value="1">
+                        <label for="q_global_y">Yes (Pass)</label>
+                    </div>
+                    <div class="btn-radio btn-radio-no">
+                        <input type="radio" name="q_global" id="q_global_n" value="0" checked>
+                        <label for="q_global_n">No (Fail)</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-name">README.md Specification</div>
+                <p>Check for a strict README.md with first line italicized structure, Description, Instructions, Resources (specifying AI usage details), Concurrency blocking cases handled, and Thread primitives utilized.</p>
+                <div class="btn-group">
+                    <div class="btn-radio btn-radio-yes">
+                        <input type="radio" name="q_readme" id="q_readme_y" value="1">
+                        <label for="q_readme_y">Yes</label>
+                    </div>
+                    <div class="btn-radio btn-radio-no">
+                        <input type="radio" name="q_readme" id="q_readme_n" value="0" checked>
+                        <label for="q_readme_n">No</label>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="section-title">Codexion Testing</div>
+
+            <div class="question-block">
+                <div class="question-name">Easy Tests</div>
+                <p>Test with up to 200 coders. Timings >= 60ms. Verify no unexpected burnouts occur and targets are met cleanly.</p>
+                <div class="btn-group">
+                    <div class="btn-radio btn-radio-yes">
+                        <input type="radio" name="q_test_easy" id="q_test_easy_y" value="1">
+                        <label for="q_test_easy_y">Yes</label>
+                    </div>
+                    <div class="btn-radio btn-radio-no">
+                        <input type="radio" name="q_test_easy" id="q_test_easy_n" value="0" checked>
+                        <label for="q_test_easy_n">No</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-name">Less Easy Tests</div>
+                <p>Validate strict burnout edge cases, state log serialization, accurate timestamps, and no duplicate dongle usage states.</p>
+                <div class="btn-group">
+                    <div class="btn-radio btn-radio-yes">
+                        <input type="radio" name="q_test_mid_low" id="q_test_mid_low_y" value="1">
+                        <label for="q_test_mid_low_y">Yes</label>
+                    </div>
+                    <div class="btn-radio btn-radio-no">
+                        <input type="radio" name="q_test_mid_low" id="q_test_mid_low_n" value="0" checked>
+                        <label for="q_test_mid_low_n">No</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-name">Medium Tests</div>
+                <p>Verify dongle cooldown behavior windows, clear differences between EDF and FIFO scheduler choices, and log thread safety.</p>
+                <div class="btn-group">
+                    <div class="btn-radio btn-radio-yes">
+                        <input type="radio" name="q_test_medium" id="q_test_medium_y" value="1">
+                        <label for="q_test_medium_y">Yes</label>
+                    </div>
+                    <div class="btn-radio btn-radio-no">
+                        <input type="radio" name="q_test_medium" id="q_test_medium_n" value="0" checked>
+                        <label for="q_test_medium_n">No</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-name">EDF Tie-Breaker (Code Review)</div>
+                <p>Verify inside code logic: when two deadlines are perfectly equal, the scheduling must prefer the higher <code>coder_id</code>.</p>
+                <div class="btn-group">
+                    <div class="btn-radio btn-radio-yes">
+                        <input type="radio" name="q_edf_tie" id="q_edf_tie_y" value="1">
+                        <label for="q_edf_tie_y">Yes</label>
+                    </div>
+                    <div class="btn-radio btn-radio-no">
+                        <input type="radio" name="q_edf_tie" id="q_edf_tie_n" value="0" checked>
+                        <label for="q_edf_tie_n">No</label>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="section-title">Final Grading Flags</div>
+            <p class="font-italic">Select the final status evaluation flag:</p>
+            
+            <div class="flags-container">
+                <div class="flag-item">
+                    <input type="radio" name="flag_select" id="flag_ok" value="ok">
+                    <label for="flag_ok" class="flag-ok">Ok</label>
+                </div>
+                <div class="flag-item">
+                    <input type="radio" name="flag_select" id="flag_outstanding" value="outstanding">
+                    <label for="flag_outstanding" class="flag-ok">Outstanding</label>
+                </div>
+                <div class="flag-item">
+                    <input type="radio" name="flag_select" id="flag_empty" value="empty">
+                    <label for="flag_empty" class="flag-fail">Empty Work</label>
+                </div>
+                <div class="flag-item">
+                    <input type="radio" name="flag_select" id="flag_incomplete" value="incomplete">
+                    <label for="flag_incomplete" class="flag-fail">Incomplete</label>
+                </div>
+                <div class="flag-item">
+                    <input type="radio" name="flag_select" id="flag_compilation" value="compilation">
+                    <label for="flag_compilation" class="flag-fail">Invalid Compile</label>
+                </div>
+                <div class="flag-item">
+                    <input type="radio" name="flag_select" id="flag_norme" value="norme">
+                    <label for="flag_norme" class="flag-fail">Norme Error</label>
+                </div>
+                <div class="flag-item">
+                    <input type="radio" name="flag_select" id="flag_cheat" value="cheat">
+                    <label for="flag_cheat" class="flag-fail">Cheat (-42)</label>
+                </div>
+            </div>
+        </section>
+
+        <div class="submit-box">
+            <button type="submit" class="btn-submit">Save Evaluation</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    function copyRepo() {
+        const repoText = document.getElementById('repoText').innerText;
+        navigator.clipboard.writeText(repoText).then(() => {
+            alert('Repository path copied to clipboard!');
+        });
+    }
+
+    document.getElementById('evalForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        alert('Evaluation state saved locally (Simulated).');
+    });
+</script>
+
+</body>
+</html>
