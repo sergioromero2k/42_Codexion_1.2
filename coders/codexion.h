@@ -6,7 +6,7 @@
 /*   By: sergio-alejandro <sergio-alejandro@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 20:47:22 by sergio-alej       #+#    #+#             */
-/*   Updated: 2026/04/06 22:31:58 by sergio-alej      ###   ########.fr       */
+/*   Updated: 2026/05/26 08:33:49 by sergio-alej      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ typedef struct s_env
 
 int					parse_config(t_config *config, int argc, char **argv);
 int					parse_config_2(t_config *config, char *str);
-int					inizialite(t_env *env, int n);
+static int			init_structures(t_env *env, int n);
 int					init_simulation(t_env *env, int n);
 void				cleanup(t_env *env, int i);
 

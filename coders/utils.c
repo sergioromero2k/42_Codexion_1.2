@@ -6,7 +6,7 @@
 /*   By: sergio-alejandro <sergio-alejandro@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/28 09:23:30 by sergio-alej       #+#    #+#             */
-/*   Updated: 2026/04/06 22:11:49 by sergio-alej      ###   ########.fr       */
+/*   Updated: 2026/05/26 08:07:16 by sergio-alej      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /**
  * Retrieves the current system time converted into milliseconds.
- * 
+ *
  * @return Total milliseconds elapsed since the Epoch (1970).
  */
 long long	get_time_in_ms(void)
@@ -22,7 +22,10 @@ long long	get_time_in_ms(void)
 	struct timeval	tv;
 
 	if (gettimeofday(&tv, NULL) == -1)
-		return (write(2, "gettimeofday error\n", 19), 0);
+	{
+		write(2, "gettimeofday error\n", 19);
+		return (0);
+	}
 	return ((long long)(tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
 
@@ -40,7 +43,7 @@ long long	get_timestamp(long long start_time)
 /**
  * Converts a millisecond duration int oan absolute timespec struct
  * for use in timed thread operations.
- * 
+ *
  * @param ms The amount of milliseconds to add the current time.
  * @return A timespec struct representing the future absolute time.
  */
@@ -48,24 +51,22 @@ struct timespec	ms_to_timespec(long long ms)
 {
 	struct timeval	tv;
 	struct timespec	ts;
+	long long		total_nsecs;
 
 	gettimeofday(&tv, NULL);
-	ts.tv_sec = tv.tv_sec + (ms / 1000);
-	ts.tv_nsec = (tv.tv_usec * 1000) + ((ms % 1000) * 1000000);
-	if (ts.tv_nsec >= 1000000000)
-	{
-		ts.tv_sec++;
-		ts.tv_nsec -= 1000000000;
-	}
+	total_nsecs = (tv.tv_usec * 1000) + ((ms % 1000) * 1000000);
+	ts.tv_sec = tv.tv_sec + (ms / 1000) + (total_nsecs / 1000000000);
+	ts.tv_nsec = total_nsecs % 1000000000;
 	return (ts);
 }
 
 /**
  * Calculates the scheduling priority of a coder based on the selected
  * algorithm (FIFO or EDF).
- * 
+ *
  * @param me Pointer to the coder's individual structure.
- * @return The priority value (lower values typically represent higher priority).
+
+	* @return The priority value (lower values typically represent higher priority).
  */
 long long	get_priority(t_coder *me)
 {

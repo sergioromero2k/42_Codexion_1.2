@@ -6,7 +6,7 @@
 /*   By: sergio-alejandro <sergio-alejandro@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 06:22:41 by sergio-alej       #+#    #+#             */
-/*   Updated: 2026/04/05 04:00:58 by sergio-alej      ###   ########.fr       */
+/*   Updated: 2026/05/26 08:35:54 by sergio-alej      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,30 @@
  * @param env Pointer to the main enviroment structure.
  * @param i Number of succesfully initialized dongle mutexes to destroy.
  */
-void	cleanup(t_env *env, int i)
+void	cleanup(t_env *env, int initialized_count)
 {
-	while (--i >= 0)
+	int	i;
+
+	while (i < initialized_count)
 	{
 		pthread_mutex_destroy(&env->dongles[i].mutex);
 		pthread_mutex_destroy(&env->coders[i].state_lock);
 		pthread_cond_destroy(&env->dongles[i].cond);
 		pqueue_free(&env->dongles[i].waiters);
+		i++;
 	}
 	pthread_mutex_destroy(&env->log_lock);
-	free(env->coders);
-	free(env->dongles);
+	pthread_mutex_destroy(&env->start_time);
+	if (env->coders)
+	{
+		free(env->coders);
+		env->coders = NULL;
+	}
+	if (env->dongles)
+	{
+		free(env->dongles);
+		env->dongles = NULL;
+	}
 }
 
 /**
@@ -40,16 +52,21 @@ void	cleanup(t_env *env, int i)
  * @param Number of coders/dongles to allocate.
  * @return int 0 on success, 1 on allocation failure.
  */
-int	inizialite(t_env *env, int n)
+static int	init_structures(t_env *env, int n)
 {
 	env->coders = malloc(sizeof(t_coder) * n);
 	if (!env->coders)
-		return (write(2, "Error: Coder malloc\n", 20), 1);
+	{
+		write(2, "Error: Coder malloc\n", 20);
+		return (1);
+	}
 	env->dongles = malloc(sizeof(t_dongle) * n);
 	if (!env->dongles)
 	{
 		free(env->coders);
-		return (write(2, "Error: Dongle malloc\n", 21), 1);
+		env->coders = NULL;
+		write(2, "Error: Dongle malloc\n", 21);
+		return (1);
 	}
 	memset(env->coders, 0, sizeof(t_coder) * n);
 	memset(env->dongles, 0, sizeof(t_dongle) * n);
@@ -57,8 +74,8 @@ int	inizialite(t_env *env, int n)
 }
 
 /**
- * Initializes mutexes, conditions,
-	and internal variables for a specific coder and its associated dongle.
+ * Initializes mutexes, conditions, and internal variables for a specific
+ * coder and its associated dongles.
  *
  * @param env Pointer to the main environment structure.
  * @param i Current index of the coder/dongle being initialized.
@@ -68,9 +85,12 @@ int	inizialite(t_env *env, int n)
 static int	init_coder(t_env *env, int i, int n)
 {
 	if (pthread_mutex_init(&env->dongles[i].mutex, NULL) != 0)
-		return (cleanup(env, i), 1);
+		return (1);
 	if (pthread_mutex_init(&env->coders[i].state_lock, NULL) != 0)
-		return (cleanup(env, i), 1);
+	{
+		pthread_mutex_destroy(&env->dongles[i].mutex);
+		return (1);
+	}
 	pthread_cond_init(&env->dongles[i].cond, NULL);
 	env->dongles[i].in_use = 0;
 	env->dongles[i].cooldown_until = 0;
@@ -79,6 +99,7 @@ static int	init_coder(t_env *env, int i, int n)
 	env->coders[i].log_lock = &env->log_lock;
 	env->coders[i].config = &env->config;
 	env->coders[i].start_time = env->start_time;
+	env->coders[i].last_compile_time = get_time_in_ms();
 	env->coders[i].right_dongle = &env->dongles[i];
 	env->coders[i].left_dongle = &env->dongles[(i + 1) % n];
 	env->coders[i].env = env;
@@ -97,17 +118,32 @@ int	init_simulation(t_env *env, int n)
 {
 	int	i;
 
-	if (inizialite(env, n) != 0)
+	if (init_structures(env, n) != 0)
 		return (1);
-	pthread_mutex_init(&env->log_lock, NULL);
-	pthread_mutex_init(&env->state_lock, NULL);
+	if (pthread_mutex_init(&env->log_lock, NULL) != 0)
+	{
+		free(env->coders);
+		free(env->dongles);
+		return (1);
+	}
+	if (pthread_mutex_init(&env->state_lock, NULL) != 0)
+	{
+		pthread_mutex_destroy(&env->log_lock);
+		free(env->coders);
+		free(env->dongles);
+		return (1);
+	}
 	env->simulation_over = 0;
 	env->start_time = get_time_in_ms();
 	i = 0;
 	while (i < n)
 	{
 		if (init_coder(env, i, n) != 0)
+		{
+			cleanup(env, i);
+				// Limpia exactamente los i elementos que se inicializaron
 			return (1);
+		}
 		i++;
 	}
 	return (0);

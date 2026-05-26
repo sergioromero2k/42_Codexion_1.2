@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heap_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: serromer <serromer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sergio-alejandro <sergio-alejandro@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/02 05:07:49 by sergio-alej       #+#    #+#             */
-/*   Updated: 2026/05/25 14:59:53 by serromer         ###   ########.fr       */
+/*   Updated: 2026/05/26 08:50:36 by sergio-alej      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,5 +91,24 @@ void	sift_down(t_pqueue *pq, int index)
 		}
 		else
 			index = 0;
+	}
+}
+
+void	pqueue_remove(t_pqueue *pq, int coder_id)
+{
+	int	i;
+
+	i = 0;
+	while (i < pq->size)
+	{
+		if (pq->heap[i].coder_id == coder_id)
+		{
+			pq->heap[i] = pq->heap[pq->size - 1];
+			pq->size--;
+			sift_down(pq, i);
+			sift_up(pq, i);
+			break ;
+		}
+		i++;
 	}
 }

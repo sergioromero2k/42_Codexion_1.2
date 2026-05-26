@@ -6,7 +6,7 @@
 /*   By: sergio-alejandro <sergio-alejandro@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 14:07:27 by sergio-alej       #+#    #+#             */
-/*   Updated: 2026/04/06 22:20:02 by sergio-alej      ###   ########.fr       */
+/*   Updated: 2026/05/26 08:47:33 by sergio-alej      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ long long	check_health(t_coder *coder)
 	long long	elapsed;
 
 	pthread_mutex_lock(&coder->state_lock);
-	elapsed = get_timestamp(coder->start_time) - coder->last_compile_time;
+	elapsed = get_time_in_ms() - coder->last_compile_time;
 	pthread_mutex_unlock(&coder->state_lock);
 	return (elapsed);
 }
@@ -111,7 +111,7 @@ void	*monitor_routine(void *arg)
 	int		i;
 
 	env = (t_env *)arg;
-	while (1)
+	while (!is_simulation_over(env))
 	{
 		i = 0;
 		while (i < env->config.number_of_coders)

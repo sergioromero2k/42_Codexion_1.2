@@ -6,7 +6,7 @@
 /*   By: sergio-alejandro <sergio-alejandro@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/03 19:31:35 by sergio-alej       #+#    #+#             */
-/*   Updated: 2026/04/05 04:07:53 by sergio-alej      ###   ########.fr       */
+/*   Updated: 2026/05/26 08:49:27 by sergio-alej      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 /**
  * Checks if the current coder is at the front of the priority queue
- * for a specific dongle. 
- * 
+ * for a specific dongle.
+ *
  * @param dongle Pointer the structure containing the waiting queue.
  * @param coder_id The unique identifier of the coder checking the queue.
  * @return 1 if it is the coder's turn, 0 otherwise.
@@ -34,7 +34,7 @@ int	is_my_turn(t_dongle *dongle, int coder_id)
 
 /**
  * Determines if a dongle is currently in a mandatory cooldown period.
- * 
+ *
  * @param dongle Pointer to the dongle structure being checked.
  * @return 1 if the cooldown has not yet expired, 0 otherwise.
  *  */
@@ -50,7 +50,7 @@ int	cooldown_active(t_dongle *dongle)
 
 /**
  * Thread-safe function to log that a coder has successfully acquired a dongle.
- * 
+ *
  * @param me Pointer to the coder structure performing the action.
  */
 void	print_lock(t_coder *me)
@@ -65,7 +65,7 @@ void	print_lock(t_coder *me)
  * Handles the logic for acquiring a single dongle,
  * including priority queue management,
  * cooldown checks, and conditional waiting.
- * 
+ *
  * @param me Pointer to the coder attempting the take the dongle.
  * @param dongle Pointer to the specific dongle to be acquired.
  */
@@ -85,9 +85,10 @@ void	take_one_dongles(t_coder *me, t_dongle *dongle)
 		}
 		else
 			pthread_cond_wait(&dongle->cond, &dongle->mutex);
+		// Dentro del 'while' en take_one_dongles:
 		if (sim_is_over(me->env))
 		{
-			pqueue_pop(&dongle->waiters);
+			pqueue_remove(&dongle->waiters, me->id);
 			pthread_mutex_unlock(&dongle->mutex);
 			return ;
 		}

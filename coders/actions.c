@@ -6,20 +6,25 @@
 /*   By: sergio-alejandro <sergio-alejandro@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/28 20:04:59 by sergio-alej       #+#    #+#             */
-/*   Updated: 2026/04/05 04:12:03 by sergio-alej      ###   ########.fr       */
+/*   Updated: 2026/05/26 08:48:45 by sergio-alej      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "codexion.h"
 
 /**
- * Attempts to acquire both the right and left dongles 
+ * Attempts to acquire both the right and left dongles
  * in sequence to begin compilation.
- * 
+ *
  * @param me Pointer to the coder's individual structure.
  */
 void	take_dongles(t_coder *me)
 {
+	if (me->config->number_of_coders == 1)
+	{
+		take_one_dongles(me, me->right_dongle);
+		return ;
+	}
 	take_one_dongles(me, me->right_dongle);
 	if (sim_is_over(me->env))
 		return ;
@@ -40,6 +45,8 @@ void	drop_dongles(t_coder *me)
 		+ me->config->dongle_cooldown;
 	pthread_cond_broadcast(&me->right_dongle->cond);
 	pthread_mutex_unlock(&me->right_dongle->mutex);
+	if (me->config->number_of_coders == 1)
+		return ;
 	pthread_mutex_lock(&me->left_dongle->mutex);
 	me->left_dongle->in_use = 0;
 	me->left_dongle->cooldown_until = get_time_in_ms()
@@ -51,7 +58,7 @@ void	drop_dongles(t_coder *me)
 /**
  *Handles the compilation phase, updating the coder's internal state
  * and logging the activity.
- * 
+ *
  * @param me Pointer to the coder's individual structure.
  */
 void	coder_compile(t_coder *me)
@@ -70,7 +77,7 @@ void	coder_compile(t_coder *me)
 
 /**
  * Logs the debugging status and pauses execution for the configured duration.
- * 
+ *
  * @param me Pointer to the coder's individual structure.
  */
 void	coder_debug(t_coder *me)

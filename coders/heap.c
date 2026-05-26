@@ -6,7 +6,7 @@
 /*   By: sergio-alejandro <sergio-alejandro@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/02 03:40:19 by sergio-alej       #+#    #+#             */
-/*   Updated: 2026/04/06 22:24:43 by sergio-alej      ###   ########.fr       */
+/*   Updated: 2026/05/26 08:50:25 by sergio-alej      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,3 +106,4 @@ void	pqueue_free(t_pqueue *pq)
 	pq->size = 0;
 	pq->capacity = 0;
 }
+
