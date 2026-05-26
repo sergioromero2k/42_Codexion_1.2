@@ -6,7 +6,7 @@
 /*   By: sergio-alejandro <sergio-alejandro@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/28 09:23:30 by sergio-alej       #+#    #+#             */
-/*   Updated: 2026/05/26 18:35:46 by sergio-alej      ###   ########.fr       */
+/*   Updated: 2026/05/26 18:46:39 by sergio-alej      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ struct timespec	ms_to_timespec(long long ms)
  *
  * @param me Pointer to the coder's individual structure.
 
-	* @return The priority value (lower values typically represent higher priority).
+	* @return The priority value (lower values 
+	typically represent higher priority).
  */
 long long	get_priority(t_coder *me)
 {

@@ -6,7 +6,7 @@
 /*   By: sergio-alejandro <sergio-alejandro@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 14:07:27 by sergio-alej       #+#    #+#             */
-/*   Updated: 2026/05/26 18:41:24 by sergio-alej      ###   ########.fr       */
+/*   Updated: 2026/05/26 18:47:03 by sergio-alej      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ int	check_all_compiled(t_env *env)
 	}
 	return (1);
 }
-
 
 int	is_simulation_over(t_env *env)
 {

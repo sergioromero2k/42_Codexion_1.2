@@ -6,7 +6,7 @@
 /*   By: sergio-alejandro <sergio-alejandro@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 06:22:41 by sergio-alej       #+#    #+#             */
-/*   Updated: 2026/05/26 18:34:32 by sergio-alej      ###   ########.fr       */
+/*   Updated: 2026/05/26 18:48:47 by sergio-alej      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,11 +122,7 @@ int	init_simulation(t_env *env, int n)
 	if (init_structures(env, n) != 0)
 		return (1);
 	if (pthread_mutex_init(&env->log_lock, NULL) != 0)
-	{
-		free(env->coders);
-		free(env->dongles);
-		return (1);
-	}
+		return (free(env->coders), free(env->dongles), 1);
 	if (pthread_mutex_init(&env->state_lock, NULL) != 0)
 	{
 		pthread_mutex_destroy(&env->log_lock);
@@ -140,11 +136,7 @@ int	init_simulation(t_env *env, int n)
 	while (i < n)
 	{
 		if (init_coder(env, i, n) != 0)
-		{
-			cleanup(env, i);
-			// Limpia exactamente los i elementos que se inicializaron
-			return (1);
-		}
+			return (cleanup(env, i), 1);
 		i++;
 	}
 	return (0);

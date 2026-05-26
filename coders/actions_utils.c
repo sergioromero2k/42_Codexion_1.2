@@ -6,7 +6,7 @@
 /*   By: sergio-alejandro <sergio-alejandro@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/03 19:31:35 by sergio-alej       #+#    #+#             */
-/*   Updated: 2026/05/26 08:49:27 by sergio-alej      ###   ########.fr       */
+/*   Updated: 2026/05/26 18:49:10 by sergio-alej      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ void	take_one_dongles(t_coder *me, t_dongle *dongle)
 		}
 		else
 			pthread_cond_wait(&dongle->cond, &dongle->mutex);
-		// Dentro del 'while' en take_one_dongles:
 		if (sim_is_over(me->env))
 		{
 			pqueue_remove(&dongle->waiters, me->id);

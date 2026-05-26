@@ -6,7 +6,7 @@
 /*   By: sergio-alejandro <sergio-alejandro@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/02 05:07:49 by sergio-alej       #+#    #+#             */
-/*   Updated: 2026/05/26 08:50:36 by sergio-alej      ###   ########.fr       */
+/*   Updated: 2026/05/26 19:03:43 by sergio-alej      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,15 +82,13 @@ void	sift_down(t_pqueue *pq, int index)
 		if ((right_child < pq->size) && has_priority(pq->heap[right_child],
 				pq->heap[left_child]))
 			smallest = right_child;
-		if (pq->heap[index].priority > pq->heap[smallest].priority
-			|| (pq->heap[index].priority == pq->heap[smallest].priority
-				&& pq->heap[index].coder_id < pq->heap[smallest].coder_id))
+		if (has_priority(pq->heap[smallest], pq->heap[index]))
 		{
 			swap(pq, index, smallest);
 			index = smallest;
 		}
 		else
-			index = 0;
+			index = pq->size;
 	}
 }
 
