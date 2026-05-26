@@ -6,7 +6,7 @@
 /*   By: sergio-alejandro <sergio-alejandro@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 06:22:41 by sergio-alej       #+#    #+#             */
-/*   Updated: 2026/05/26 08:35:54 by sergio-alej      ###   ########.fr       */
+/*   Updated: 2026/05/26 18:34:32 by sergio-alej      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	cleanup(t_env *env, int initialized_count)
 {
 	int	i;
 
+	i = 0;
 	while (i < initialized_count)
 	{
 		pthread_mutex_destroy(&env->dongles[i].mutex);
@@ -141,7 +142,7 @@ int	init_simulation(t_env *env, int n)
 		if (init_coder(env, i, n) != 0)
 		{
 			cleanup(env, i);
-				// Limpia exactamente los i elementos que se inicializaron
+			// Limpia exactamente los i elementos que se inicializaron
 			return (1);
 		}
 		i++;
