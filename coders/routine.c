@@ -6,7 +6,7 @@
 /*   By: sergio-alejandro <sergio-alejandro@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 14:07:21 by sergio-alej       #+#    #+#             */
-/*   Updated: 2026/05/26 18:40:42 by sergio-alej      ###   ########.fr       */
+/*   Updated: 2026/05/26 18:42:20 by sergio-alej      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	set_sim_over(t_env *env)
 /**
  * Thread-safely checks the global enviroment state to determine
  * if the simulaton should terminate.
- * 
+ *
  * @param env Pointer to the main environment structure.
  * @return 1 if the simulation has ended, 0 otherwise.
  */

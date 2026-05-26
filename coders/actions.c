@@ -6,7 +6,7 @@
 /*   By: sergio-alejandro <sergio-alejandro@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/28 20:04:59 by sergio-alej       #+#    #+#             */
-/*   Updated: 2026/05/26 08:48:45 by sergio-alej      ###   ########.fr       */
+/*   Updated: 2026/05/26 18:43:27 by sergio-alej      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	drop_dongles(t_coder *me)
 void	coder_compile(t_coder *me)
 {
 	pthread_mutex_lock(&me->state_lock);
-	me->last_compile_time = get_timestamp(me->start_time);
+	me->last_compile_time = get_time_in_ms();
 	pthread_mutex_unlock(&me->state_lock);
 	pthread_mutex_lock(me->log_lock);
 	printf("%lld %d is compiling\n", get_timestamp(me->start_time), me->id);
