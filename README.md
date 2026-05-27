@@ -109,7 +109,6 @@ A dedicated monitor thread runs `monitor_routine`, checking two stop conditions 
 ```
 .
 ├── coders/               # Mandatory: Core source files 
-│   ├── Makefile          # Compiles with -Wall -Wextra -Werror -pthread
 │   ├── codexion.h        # Global header with structures and prototypes 
 │   ├── main.c            # Entry point and argument handling 
 │   ├── parsing.c         # Validation of mandatory arguments 
@@ -127,6 +126,8 @@ A dedicated monitor thread runs `monitor_routine`, checking two stop conditions 
 │   ├── ES/               # Spanish translations/notes
 │   └── tests/            # Unit tests for internal modules
 │       └── test_heap.c   # Verification of the priority queue logic
+├── Makefile              # Compiles with -Wall -Wextra -Werror -pthread
 └── README.md             # This file
+
 
 ```
