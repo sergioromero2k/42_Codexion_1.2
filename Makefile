@@ -9,6 +9,7 @@ NAME		= codexion
 
 CC			= cc
 CFLAGS		= -Wall -Werror -Wextra -pthread -I coders/
+DEPFLAGS	= -MMD -MP
 RM			= rm -rf
 
 SRCS		= coders/main.c \
@@ -23,32 +24,32 @@ SRCS		= coders/main.c \
 			coders/heap_utils.c
 
 OBJS		= $(SRCS:.c=.o)
+DEPS		= $(SRCS:.c=.d)
 
 # Colors
-DEF_COLOR   = \033[0;39m
-GRAY        = \033[0;90m
-GREEN       = \033[0;92m
+DEF_COLOR	= \033[0;39m
+GRAY		= \033[0;90m
+GREEN		= \033[0;92m
 
 all: $(NAME)
 
-# target : dependencies
-#	command
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
-	@echo "$(GREEN)Codexion compiled successfuly!$(DEF_COLOR)"
+	@echo "$(GREEN)Codexion compiled successfully!$(DEF_COLOR)"
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(DEPFLAGS) -c $< -o $@
+
+-include $(DEPS)
 
 clean:
-	$(RM) $(OBJS)
+	$(RM) $(OBJS) $(DEPS)
 	@echo "$(GRAY)Deleted objects.$(DEF_COLOR)"
 
 fclean: clean
-	$(RM) $(NAME) 
-	@echo "$(GRAY)Deleted Executables.$(DEF_COLOR)"
+	$(RM) $(NAME)
+	@echo "$(GRAY)Deleted executables.$(DEF_COLOR)"
 
 re: fclean all
 
 .PHONY: all clean fclean re
-

@@ -6,7 +6,7 @@
 /*   By: sergio-alejandro <sergio-alejandro@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/28 09:23:30 by sergio-alej       #+#    #+#             */
-/*   Updated: 2026/05/26 18:46:39 by sergio-alej      ###   ########.fr       */
+/*   Updated: 2026/06/08 10:35:40 by sergio-alej      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,33 @@ long long	get_priority(t_coder *me)
 	if (me->config->scheduler == E_SCHED_EDF)
 		return (me->last_compile_time + me->config->time_to_burnout);
 	return (get_time_in_ms());
+}
+
+/**
+ * Converts a string to a long integer.
+ *
+ * @param str	The string to convert.
+ * @return		The long integer representation of the string.
+ */
+long	ft_atol(const char *str)
+{
+	long	result;
+	int		sign;
+
+	result = 0;
+	sign = 1;
+	while (*str == ' ' || (*str >= 9 && *str <= 13))
+		str++;
+	if (*str == '-' || *str == '+')
+	{
+		if (*str == '-')
+			sign = -1;
+		str++;
+	}
+	while (*str >= '0' && *str <= '9')
+	{
+		result = result * 10 + (*str - '0');
+		str++;
+	}
+	return (result * sign);
 }

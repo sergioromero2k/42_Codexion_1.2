@@ -6,7 +6,7 @@
 /*   By: sergio-alejandro <sergio-alejandro@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 05:23:17 by sergio-alej       #+#    #+#             */
-/*   Updated: 2026/05/26 09:03:43 by sergio-alej      ###   ########.fr       */
+/*   Updated: 2026/06/08 10:35:57 by sergio-alej      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,11 @@ int	parse_config(t_config *config, int argc, char **argv)
 		i++;
 	}
 	config->number_of_coders = atoi(argv[1]);
-	config->time_to_burnout = atol(argv[2]);
-	config->time_to_compile = atol(argv[3]);
-	config->time_to_debug = atol(argv[4]);
-	config->time_to_refactor = atol(argv[5]);
-	config->number_of_compiles_required = atol(argv[6]);
-	config->dongle_cooldown = atol(argv[7]);
+	config->time_to_burnout = ft_atol(argv[2]);
+	config->time_to_compile = ft_atol(argv[3]);
+	config->time_to_debug = ft_atol(argv[4]);
+	config->time_to_refactor = ft_atol(argv[5]);
+	config->number_of_compiles_required = ft_atol(argv[6]);
+	config->dongle_cooldown = ft_atol(argv[7]);
 	return (parse_config_2(config, argv[8]));
 }

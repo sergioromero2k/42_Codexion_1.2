@@ -6,7 +6,7 @@
 /*   By: sergio-alejandro <sergio-alejandro@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/21 20:47:22 by sergio-alej       #+#    #+#             */
-/*   Updated: 2026/05/26 19:04:56 by sergio-alej      ###   ########.fr       */
+/*   Updated: 2026/06/08 10:36:32 by sergio-alej      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ long long			get_priority(t_coder *me);
 struct timespec		ms_to_timespec(long long ms);
 int					is_my_turn(t_dongle *dongle, int coder_id);
 int					cooldown_active(t_dongle *dongle);
+long				ft_atol(const char *str);
 
 /* PRIORITY QUEUE */
 int					pqueue_init(t_pqueue *pq, int capacity);
